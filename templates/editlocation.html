@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block page_content %}
+{{ super() }}
+<h2>Edit location {{ location.name }}</h2>
+{{ wtf.quick_form(form) }}
+{% endblock %}

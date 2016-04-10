@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block page_content %}
+<div class ='row row-eq-height'>
+
+</div>
+  {% for location in locations %}
+
+  <div class = 'location-tile col-lg-4 img-thumbnail responsive row-eq-height'>
+    <h3>{{location.name}}</h3>
+    {{location.description}}
+    <img src = {{ location.pic_url }} class='img-responsive center-block img-rounded'/>
+  </div>
+
+{% endfor %}
+
+</div>
+{% endblock %}

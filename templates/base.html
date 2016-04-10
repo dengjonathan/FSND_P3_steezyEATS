@@ -1,0 +1,50 @@
+{% extends "bootstrap/base.html" %} {% block title %}SteezyEATS{% endblock %} {% block head %} {{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="static/styles.css"> {% endblock %} {% block navbar %}
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">SteezyEATS</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/locations">Locations</a></li>
+          <li><a href="/eats">Eats</a></li>
+          <li><a href="/profile">Your Profile</a></li>
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+{% block content %}
+</br>
+</br>
+<div class='container'>
+  <div class="container page-header">
+    {% block page_header %}
+    <h1>SteezyEATS</h1>
+  </div>
+  {% endblock %} {% block page_content %}{% endblock %}
+</div>
+{% endblock %} {% block scripts %} {{ super() }} {% endblock %}
