@@ -2,4 +2,19 @@
 {% block page_content %}
 {{ super() }}
 <h1>{{ location.name }}</h1>
+<img src='{{location.pic_url}}' />
+<p> {{ location.description}}</p>
+
+<div class='masonry'>
+{% for eat in eats %}
+<div class = 'col-sm-4 responsive item'>
+  <h3>{{eat.name}}</h3>
+  {% if eat.description %}
+  {{eat.description}}
+  {% endif %}
+  <img src = {{ eat.pic_url }} class='img-responsive img-thumbnail center-block img-rounded' alt= '{{eat.name}}'/>
+</div>
+
+{% endfor %}
+</div>
 {% endblock %}

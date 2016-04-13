@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% block page_content %}
 {{ super() }}
-
+<a href = '{{url_for("newEat")}}'>Create new eat</a>
+</br>
+</br>
+<div class ='masonry'>
 {% for eat in eats %}
-<div class='col-md-6 img-thumbnail responsive' href='{{ url_for('showOneEat', eat_id=eat.id)}}'>
-  <h4 class=''>{{ eat.name }}</h3>
+<div class='col-md-6 img-thumbnail responsive'>
+  <h4 class>{{ eat.name }}</h3>
   <h5>{{eat.category}}</h5>
   <img src={{eat.pic_url}} alt={ {eat.name}} class='img-responsive center-block img-rounded' />
   <p>
@@ -13,7 +16,8 @@
   </br>
   <a href='{{ url_for('editEat', eat_id=eat.id)}}'>Edit</a>
     <a href='{{ url_for('deleteEat', eat_id=eat.id)}}'>Delete</a>
-</div>]
+</div>
 
  {% endfor %}
+</div>
 {% endblock %}

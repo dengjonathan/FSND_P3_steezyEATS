@@ -1,17 +1,26 @@
-{% extends 'base.html' %}
-{% block page_content %}
-<div class ='row row-eq-height'>
+{% extends 'base.html' %} {% block page_content %}
+<a href='{{url_for("newLoc")}}'>Create new foodie location</a>
+<div class='masonry'>
 
-</div>
   {% for location in locations %}
 
-  <div class = 'location-tile col-lg-4 img-thumbnail responsive row-eq-height'>
-    <h3>{{location.name}}</h3>
-    {{location.description}}
-    <img src = {{ location.pic_url }} class='img-responsive center-block img-rounded'/>
+  <div class='col-sm-4 responsive item' href='{{url_for('showOneLoc', loc_id=location.id)}}'>
+    <h3 href='{{ url_for("showOneLoc", loc_id=location.id) }}'>{{location.name}}</h3>
+    {% if location.description %}
+      {{location.description}}
+    {% endif %}
+    <img src={{ location.pic_url }} href='{{url_for('showOneLoc', loc_id=location.id)}}' class='img-responsive img-thumbnail center-block img-rounded' alt='{{location.name}}' />
+    <a class='btn btn-primary' role='button' href='{{ url_for("showOneLoc", loc_id=location.id) }}'>See this Location</a></br>
+
+    <div class='row container'>
+      <a href='{{url_for('editLoc', loc_id=location.id)}}'>Edit</a>
+        <a href='{{url_for('deleteLoc', loc_id=location.id)}}'>Delete</a>
+    </div>
   </div>
-
-{% endfor %}
-
+      {% endfor %}
 </div>
-{% endblock %}
+
+
+
+  </div>
+  {% endblock %}

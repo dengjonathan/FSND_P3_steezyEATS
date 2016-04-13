@@ -2,23 +2,14 @@
 <p class='site_description'>SteezyEATS is food-based social media for the dirt streets you've walked, street markets you've hustled, and the greasy yummies you've eaten implemented - in Flask, SQLAlchemy, and Twitter Bootstrap. </br>
   </br> No pretentions here.
 </p>
-<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-
-<div class='flashed_messages'>
-  <ul>
-    {% for message in get_flashed_messages() %}
-    <li>
-    </li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-</div>
+<p><a class="btn btn-primary" href="#" role="button">Learn more &raquo;</a></p>
 
 {% endblock %} {% block page_content %}
 <span class='row row-eq-height'>
 
   <div class='col-md-6 recent_locations'>
     <h3>Recent Locations</h3>
-    <div class='row center-floater row-eq-height'>
+    <div class='masonry'>
       {% for location in recent_locations %}
       <div class='col-md-6 img-thumbnail responsive' href='{{ url_for('showOneLoc', loc_id=location.id)}}'>
         <h4 class=''>{{ location.name }}</h3>
@@ -36,18 +27,17 @@
       </div>
 
 
-      <div class='col-md-6 recent_eats'>
+      <div class='col-md-6 recent_eats masonry'>
         <h3>Recent Eats</h3>
-        <div class='row center-floater row-eq-height'>
+        <div class='masonry'>
           {% for eat in recent_eats %}
-          <div class='col-md-6 img-thumbnail responsive' href='{{ url_for('showOneEat', eat_id=eat.id)}}'>
+          <div class='col-md-6 img-thumbnail responsive'>
             <h4 class=''>{{ eat.name }}</h3>
             <img src={{eat.pic_url}} alt={ {eat.name}} class='img-responsive center-block img-rounded' />
             <p>
               {{eat.description}}
             </p>
             </br>
-            <a href='{{ url_for('showOneEat', eat_id=eat.id)}}'>See this mo'</a>
           </div>
            {% endfor %}
           </div>

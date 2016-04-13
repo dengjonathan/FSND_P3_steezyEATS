@@ -2,6 +2,7 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block page_content %}
-<h2>Add a New Restaurant</h2>
-{{ wtf.quick_form(form) }}
+<h2>Add a New {{item_name}}</h2>
+{{ wtf.quick_form(form)}}
+
 {% endblock %}
