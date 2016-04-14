@@ -46,6 +46,12 @@ def page_not_found(e):
     return render_template('error.html', login_session=login_session), 404
 
 # JSON API endpoints
+@app.route('/login_session')
+def showSession():
+    list = []
+    list.append([(i, login_session[i]) for i in login_session])
+    return render_template('login_session.html', list = list)
+
 @app.route('/locations/JSON')
 def JSON_location():
     locations = session.query(Locations).all()
@@ -66,8 +72,8 @@ def JSON_eats():
 @app.route('/')
 @app.route('/home')
 def home():
-    recent_locations = session.query(Locations).order_by(Locations.id.desc()).limit(6)
-    recent_eats = session.query(Eats).order_by(Eats.id.desc()).limit(6)
+    recent_locations = session.query(Locations).order_by(Locations.id.desc()).limit(4)
+    recent_eats = session.query(Eats).order_by(Eats.id.desc()).limit(4)
     return render_template('index.html', recent_eats=recent_eats,
                            recent_locations=recent_locations, login_session=login_session)
 
@@ -117,7 +123,6 @@ def gconnect():
         return response
     # Check that the access token is valid.
     access_token = credentials.access_token
-    print '#######access_token %s' % access_token
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
            % access_token)
     h = httplib2.Http()
@@ -168,7 +173,7 @@ def gconnect():
     login_session['provider'] = 'google'
 
     # see if user exists in Users Table and add if doesn't exist
-    if not session.query(Users).filter_by(email=login_session['username']):
+    if not getUserID(login_session['username']):
         user_id = createNewUser()
         login_session['user_id'] = user_id
 
@@ -193,7 +198,6 @@ def gdisconnect():
     access_token = login_session['access_token']
     url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
     result = httplib2.Http().request(url, 'GET')
-    print ('##result {}').format(result[0])
     if result[0]['status'] == '200':
         response = make_response(json.dumps('Successfully disconnected'), 200)
         response.headers['Content-Type'] = 'application/json'
@@ -210,7 +214,6 @@ def fb_connect():
         response.headers['Content-Type'] = 'application/json'
         return response
     # TODO fb does not return access token here
-    print request
     access_token = request.data
     print "access token received %s " % access_token
 
@@ -232,9 +235,6 @@ def fb_connect():
     url = 'https://graph.facebook.com/v2.4/me?%s&fields=name,id,email' % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
-    print result
-    # print "url sent for API access:%s"% url
-    # print "API JSON result: %s" % result
     data = json.loads(result)
     login_session['provider'] = 'facebook'
     login_session['username'] = data["name"]
@@ -280,10 +280,7 @@ def fb_disconnect():
 
 @app.route('/logout')
 def disconnect():
-    if 'provider' in login_session:
-        print '## provider %s' % login_session['provider']
-        for i in login_session:
-            print login_session[i]
+    if login_session['provider']:
         if login_session['provider'] == 'google':
             gdisconnect()
             del login_session['gplus_id']
@@ -296,8 +293,6 @@ def disconnect():
         del login_session['picture']
         del login_session['access_token']
         del login_session['provider']
-        for i in login_session:
-            print 'login_session %s' % i
         flash('You have been successfully logged out!')
     else:
         flash('You are currently not logged in!')
@@ -350,7 +345,6 @@ def newLoc():
     form = newLocationForm()
     if request.method == 'POST' and form.validate_on_submit():
         n = Locations(name=form.name.data,
-                     coordinates=form.coordinates.data,
                      description=form.description.data,
                      pic_url=form.pic_url.data)
         if login_session['username']:
@@ -366,7 +360,7 @@ def newLoc():
 @app.route('/locations/<int:loc_id>/edit/', methods = ['GET', 'POST'])
 def editLoc(loc_id):
     edited_location = session.query(Locations).filter_by(id=loc_id).one()
-    if not login_session['user_id']:
+    if not login_session['username']:
         flash("Please login to create and edit items")
         return redirect(url_for('login'))
     if login_session['user_id'] != edited_location.user_id:
@@ -376,8 +370,6 @@ def editLoc(loc_id):
     if request.method == 'POST' and form.validate_on_submit():
         if form.name.data:
             edited_location.name = form.name.data
-        if form.coordinates.data:
-            edited_location.coordinates=form.coordinates.data
         if form.description.data:
             edited_location.description=form.description.data
         if form.pic_url.data:

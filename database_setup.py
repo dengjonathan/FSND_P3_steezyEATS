@@ -10,8 +10,6 @@ class Users(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250))
-    gplus_id = Column(String(250))
-    fb_id = Column(String(250))
     pic_url = Column(String(250))
 
     @property
@@ -32,7 +30,6 @@ class Locations(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     user_id = Column(Integer, ForeignKey('users.id'))
-    coordinates = Column(String(250))
     description = Column(String(1000))
     pic_url = Column(String(250))
     users = relationship(Users)

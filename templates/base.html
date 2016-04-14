@@ -27,13 +27,20 @@
           <li>
             <div id='signinButton navbar'>
 
-            </div>
+            <div class = 'btn'>
+
               {% if not login_session['username'] %}
+
               <a class="btn btn-primary" href="/login" role="button">Log-In</a>
+            </div>
               {% else %}
+              <a class="btn btn-primary" href="/logout" role="button">Log-Out</a>
+            </div>
+              <div class = 'profile pull-right'>
+
               <a href='/profile'>{{login_session['username']}}</a>
               <img src="{{login_session.picture}}" class='img-responsive img-circle navbar-brand'/>
-              <a class="btn btn-primary" href="/logout" role="button">Log-Out</a>
+              </div>
               {% endif %}
             </div>
               </li>

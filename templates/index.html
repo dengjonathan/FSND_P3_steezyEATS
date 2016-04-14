@@ -2,13 +2,14 @@
 <p class='site_description'>SteezyEATS is food-based social media for the dirt streets you've walked, street markets you've hustled, and the greasy yummies you've eaten implemented - in Flask, SQLAlchemy, and Twitter Bootstrap. </br>
   </br> No pretentions here.
 </p>
-<p><a class="btn btn-primary" href="#" role="button">Learn more &raquo;</a></p>
 
 {% endblock %} {% block page_content %}
 <span class='row row-eq-height'>
 
   <div class='col-md-6 recent_locations'>
     <h3>Recent Locations</h3>
+  </br>
+    <p><a class="btn btn-default" href="{{ url_for('showAllLocs') }}" role="button">Mo' Locations &raquo;</a></p>
     <div class='masonry'>
       {% for location in recent_locations %}
       <div class='col-md-6 img-thumbnail responsive' href='{{ url_for('showOneLoc', loc_id=location.id)}}'>
@@ -22,13 +23,13 @@
         </div>
          {% endfor %}
         </div>
-      </br>
-        <p><a class="btn btn-default" href="{{ url_for('showAllLocs') }}" role="button">Mo' Locations &raquo;</a></p>
       </div>
 
 
       <div class='col-md-6 recent_eats masonry'>
         <h3>Recent Eats</h3>
+      </br>
+        <p><a class="btn btn-default" href="{{url_for('showAllEats')}}" role="button">Mo' Locations &raquo;</a></p>
         <div class='masonry'>
           {% for eat in recent_eats %}
           <div class='col-md-6 img-thumbnail responsive'>
@@ -41,8 +42,7 @@
           </div>
            {% endfor %}
           </div>
-        </br>
-          <p><a class="btn btn-default" href="#" role="button">Mo' Locations &raquo;</a></p>
+
         </div>
   </span>
 
