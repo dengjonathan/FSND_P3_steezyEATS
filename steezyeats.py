@@ -50,12 +50,14 @@ def page_not_found(e):
 
 # JSON API endpoints
 
-
-@app.route('/login_session')
-def showSession():
-    list = []
-    list.append([(i, login_session[i]) for i in login_session])
-    return render_template('login_session.html', list=list)
+### Below is a helpful debugging method that I created in development.  When
+### the login/logout functions not working I could inspect the state of the
+### session variables
+# @app.route('/login_session')
+# def showSession():
+#     list = []
+#     list.append([(i, login_session[i]) for i in login_session])
+#     return render_template('login_session.html', list=list)
 
 
 @app.route('/locations/JSON')
