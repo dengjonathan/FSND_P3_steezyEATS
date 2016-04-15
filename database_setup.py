@@ -33,16 +33,17 @@ class Locations(Base):
     description = Column(String(1000))
     pic_url = Column(String(250))
     users = relationship(Users)
+    eats = relationship("Eats", cascade='delete')
 
     @property
     def JSON_format(self):
         """Formats user data into JSON readable format"""
         return {
             'name': self.name,
-            'coordinates': self.coordinates,
             'id': self.id,
             'user_id': self.user_id,
-            'pic_url': self.pic_url
+            'pic_url': self.pic_url,
+            'description': self.description
                }
 
 # TODO for some reason Eats is saying there is not location_id
